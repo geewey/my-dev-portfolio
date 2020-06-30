@@ -1,5 +1,5 @@
-const config = require('./src/config');
-const theme = require('./src/styles/Theme')
+const config = require("./src/config")
+const theme = require("./src/styles/Theme")
 
 module.exports = {
   siteMetadata: {
@@ -57,6 +57,25 @@ module.exports = {
       options: {
         path: `${__dirname}/src/content`,
         name: `content`,
+      },
+    },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-interactive-gifs`,
+            options: {
+              root: `${__dirname}`,
+              src: `${__dirname}/src/gifs`,
+              dest: `${__dirname}/public/static/gifs`,
+              play: `${__dirname}/src/gifs/play.gif`,
+              placeholder: `${__dirname}/src/gifs/placeholder.gif`,
+              loading: `${__dirname}/src/gifs/loading.gif`,
+              relativePath: `/static/gifs`,
+            },
+          },
+        ],
       },
     },
   ],

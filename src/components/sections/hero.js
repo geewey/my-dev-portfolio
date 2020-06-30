@@ -99,7 +99,7 @@ const Hero = ({ content }) => {
     }
     pageLoadSequence()
   }, [isIntroDone, eControls, gControls, sControls, uControls])
-  
+
   return (
     <StyledSection id="hero">
       {!isIntroDone && <SplashScreen />}
@@ -108,8 +108,14 @@ const Hero = ({ content }) => {
           <h1 className="title">
             <div className="greetings">
               {frontmatter.greetings}
-              <motion.div animate={eControls} style={{ originX: 0.7, originY: 0.7 }}>
-                <Img className="emoji" fluid={frontmatter.icon.childImageSharp.fluid} />
+              <motion.div
+                animate={eControls}
+                style={{ originX: 0.7, originY: 0.7 }}
+              >
+                <Img
+                  className="emoji"
+                  fluid={frontmatter.icon.childImageSharp.fluid}
+                />
               </motion.div>
             </div>
             {frontmatter.title}
@@ -120,6 +126,7 @@ const Hero = ({ content }) => {
             <AnimatedUnderlining animate={uControls} color="tertiary" big>
               {frontmatter.subtitle}
             </AnimatedUnderlining>
+            {frontmatter.subtitlePrefix2}{" "}
           </h2>
           <div className="description">
             <MDXRenderer>{body}</MDXRenderer>

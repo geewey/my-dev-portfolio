@@ -12,6 +12,7 @@ import Underlining from "../../styles/Underlining"
 const { mediumRssFeed, shownArticles } = config
 
 const StyledSection = motion.custom(styled.section`
+  margin-top: 6rem;
   width: 100%;
   height: auto;
   background: ${({ theme }) => theme.colors.background};
@@ -112,7 +113,7 @@ const StyledContentWrapper = styled(ContentWrapper)`
   }
 `
 
-const Articles = () => {
+const BlogPosts = () => {
   // shownArticles is set in config.js, due to the rss feed loader
   // it is currently limited to max 3
   const MAX_ARTICLES = shownArticles
@@ -120,24 +121,28 @@ const Articles = () => {
   const { isIntroDone } = useContext(Context).state
   const [articles, setArticles] = useState()
   const articlesControls = useAnimation()
-  
+
   // Load and display articles after the splashScreen sequence is done
   useEffect(() => {
     const loadArticles = async () => {
       if (isIntroDone) {
-        await articlesControls.start({ opacity: 1, y: 0, transition: { delay: 1 } })
+        await articlesControls.start({
+          opacity: 1,
+          y: 0,
+          transition: { delay: 1 },
+        })
         // MediumRssFeed is set in config.js
         fetch(mediumRssFeed, { headers: { Accept: "application/json" } })
-        .then(res => res.json())
-        // Feed also contains comments, therefore we filter for articles only
-        .then(data => data.items.filter(item => item.categories.length > 0))
-        .then(newArticles => newArticles.slice(0, MAX_ARTICLES))
-        .then(articles => setArticles(articles))
-        .catch(error => console.log(error))
+          .then(res => res.json())
+          // Feed also contains comments, therefore we filter for articles only
+          .then(data => data.items.filter(item => item.categories.length > 0))
+          .then(newArticles => newArticles.slice(0, MAX_ARTICLES))
+          .then(articles => setArticles(articles))
+          .catch(error => console.log(error))
       }
     }
     loadArticles()
-  },[isIntroDone, articlesControls, MAX_ARTICLES])
+  }, [isIntroDone, articlesControls, MAX_ARTICLES])
 
   return (
     <StyledSection
@@ -146,8 +151,8 @@ const Articles = () => {
       animate={articlesControls}
     >
       <StyledContentWrapper>
-        <h3 className="section-title">Latest Articles on Medium</h3>
-        <div className="articles">
+        <h3 className="section-title">Latest Blog Posts on Medium</h3>
+        <div className="articles" id="blogposts">
           {articles
             ? articles.map(item => (
                 <a
@@ -170,28 +175,25 @@ const Articles = () => {
                 </a>
               ))
             : [...Array(MAX_ARTICLES)].map((i, key) => (
-              <div className="card" key={key}>
-                <SkeletonLoader 
-                  background="#f2f2f2"
-                  height="1.5rem" 
-                  style={{ marginBottom: ".5rem" }}
-                />
-                <SkeletonLoader 
-                  background="#f2f2f2" 
-                  height="4rem"
-                />
-                <SkeletonLoader 
-                  background="#f2f2f2" 
-                  height=".75rem" 
-                  width="50%" 
-                  style={{ marginTop: ".5rem" }}
-                />
-              </div>
-            ))}
+                <div className="card" key={key}>
+                  <SkeletonLoader
+                    background="#f2f2f2"
+                    height="1.5rem"
+                    style={{ marginBottom: ".5rem" }}
+                  />
+                  <SkeletonLoader background="#f2f2f2" height="4rem" />
+                  <SkeletonLoader
+                    background="#f2f2f2"
+                    height=".75rem"
+                    width="50%"
+                    style={{ marginTop: ".5rem" }}
+                  />
+                </div>
+              ))}
         </div>
       </StyledContentWrapper>
     </StyledSection>
   )
 }
 
-export default Articles
+export default BlogPosts

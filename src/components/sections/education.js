@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import Img from "gatsby-image"
-import { motion, useAnimation } from "framer-motion"
+// import Img from "gatsby-image"
+import { motion, useAnimation } from "framer-motion"
 
 import { detectMobileAndTablet, isSSR } from "../../utils"
-import { useOnScreen }  from "../../hooks/"
+import { useOnScreen } from "../../hooks"
 import ContentWrapper from "../../styles/ContentWrapper"
 import Button from "../../styles/Button"
 
@@ -40,9 +40,9 @@ const StyledContentWrapper = styled(ContentWrapper)`
   }
 `
 
-const StyledInterests = styled.div`
+const StyledEducation = styled.div`
   display: grid;
-  /* Calculate how many columns are needed, depending on interests count */
+  /* Calculate how many columns are needed, depending on education count */
   grid-template-columns: repeat(
     ${({ itemCount }) => Math.ceil(itemCount / 2)},
     15.625rem
@@ -93,9 +93,10 @@ const StyledInterests = styled.div`
     }
   }
 
-  .interest {
+  // properties for each box
+  .education {
     width: 15.625rem;
-    height: 3rem;
+    height: 12rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -104,15 +105,23 @@ const StyledInterests = styled.div`
     border-radius: ${({ theme }) => theme.borderRadius};
     .icon {
       margin-right: 0.5rem;
+      padding: 0.4rem;
+    }
+    .name {
+      font-weight: bold;
+      display: flex;
+    }
+    .completion {
+      display: flex;
     }
   }
 `
 
-const Interests = ({ content }) => {
+const Education = ({ content }) => {
   const { exports, frontmatter } = content[0].node
-  const { shownItems, interests } = exports
+  const { shownItems, education } = exports
 
-  const [shownInterests, setShownInterests] = useState(shownItems)
+  const [shownEducation, setShownEducation] = useState(shownItems)
 
   const ref = useRef()
   const onScreen = useOnScreen(ref)
@@ -121,47 +130,56 @@ const Interests = ({ content }) => {
   const bControls = useAnimation()
 
   useEffect(() => {
-    // If mobile or tablet, show all interests initially
-    // Otherwise interests.mdx will determine how many interests are shown
+    // If mobile or tablet, show all eudcation initially
+    // Otherwise eudcation.mdx will determine how many eudcation are shown
     // (isSSR) is used to prevent error during gatsby build
     if (!isSSR && detectMobileAndTablet(window.innerWidth)) {
-      setShownInterests(interests.length)
+      setShownEducation(education.length)
     }
-  }, [interests])
+  }, [education])
 
   useEffect(() => {
     const sequence = async () => {
       if (onScreen) {
         // i receives the value of the custom prop - can be used to stagger
-        // the animation of each "interest" element
+        // the animation of each "education" element
         await iControls.start(i => ({
-          opacity: 1, scaleY: 1, transition: { delay: i * 0.1 }
+          opacity: 1,
+          scaleY: 1,
+          transition: { delay: i * 0.1 },
         }))
         await bControls.start({ opacity: 1, scaleY: 1 })
       }
     }
     sequence()
-  }, [onScreen, shownInterests, iControls, bControls])
+  }, [onScreen, shownEducation, iControls, bControls])
 
-  const showMoreItems = () => setShownInterests(shownInterests + 4)
+  const showMoreItems = () => setShownEducation(shownEducation + 4)
 
   return (
-    <StyledSection id="interests">
+    <StyledSection id="education">
       <StyledContentWrapper>
         <h3 className="section-title">{frontmatter.title}</h3>
-        <StyledInterests itemCount={interests.length} ref={ref}>
-          {interests.slice(0, shownInterests).map(({ name, icon }, key) => (
-            <motion.div 
-              className="interest" 
-              key={key} 
-              custom={key} 
-              initial={{ opacity: 0, scaleY: 0 }}
-              animate={iControls}
-            >
-                <Img className="icon" fixed={icon.childImageSharp.fixed} /> {name}
-            </motion.div>
-          ))}
-          {shownInterests < interests.length && (
+        <StyledEducation itemCount={education.length} ref={ref}>
+          {education
+            .slice(0, shownEducation)
+            .map(({ name, completion, description, icon }, key) => (
+              <motion.div
+                className="education"
+                key={key}
+                custom={key}
+                initial={{ opacity: 0, scaleY: 0 }}
+                animate={iControls}
+              >
+                {/* <Img className="icon" fixed={icon.childImageSharp.fixed} />{" "} */}
+                <p>
+                  <span className="name">{`${name}:`}</span>
+                  <span className="completion">{completion}</span>
+                  <p>{description}</p>
+                </p>
+              </motion.div>
+            ))}
+          {shownEducation < education.length && (
             <motion.div initial={{ opacity: 0, scaleY: 0 }} animate={bControls}>
               <Button
                 onClick={() => showMoreItems()}
@@ -173,18 +191,18 @@ const Interests = ({ content }) => {
               </Button>
             </motion.div>
           )}
-        </StyledInterests>
+        </StyledEducation>
       </StyledContentWrapper>
     </StyledSection>
   )
 }
 
-Interests.propTypes = {
+Education.propTypes = {
   content: PropTypes.arrayOf(
     PropTypes.shape({
       node: PropTypes.shape({
         exports: PropTypes.shape({
-          interests: PropTypes.array.isRequired,
+          education: PropTypes.array.isRequired,
           shownItems: PropTypes.number.isRequired,
         }).isRequired,
         frontmatter: PropTypes.object.isRequired,
@@ -193,4 +211,4 @@ Interests.propTypes = {
   ).isRequired,
 }
 
-export default Interests
+export default Education
