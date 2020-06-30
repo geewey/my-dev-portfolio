@@ -47,7 +47,7 @@ const StyledEducation = styled.div`
     ${({ itemCount }) => Math.ceil(itemCount / 2)},
     15.625rem
   );
-  grid-template-rows: repeat(2, auto);
+  grid-template-rows: repeat(1, auto);
   grid-auto-flow: column;
   column-gap: 1rem;
   row-gap: 1rem;
@@ -93,7 +93,7 @@ const StyledEducation = styled.div`
     }
   }
 
-  // properties for each box
+  /* properties for each box */
   .education {
     width: 15.625rem;
     height: 12rem;
@@ -101,6 +101,7 @@ const StyledEducation = styled.div`
     justify-content: flex-start;
     align-items: center;
     padding: 1rem;
+    margin-bottom: 2rem;
     border: 0.125rem solid ${({ theme }) => theme.colors.primary};
     border-radius: ${({ theme }) => theme.borderRadius};
     .icon {

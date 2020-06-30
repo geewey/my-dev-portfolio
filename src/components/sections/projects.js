@@ -53,7 +53,8 @@ const StyledContentWrapper = styled(ContentWrapper)`
       display: flex;
       flex-direction: row;
       margin-top: -2.5rem;
-      padding: 2.5rem 2.5rem;
+      margin-bottom: -0.5rem;
+      padding: 2rem 2.5rem 0.5rem;
       overflow-x: scroll;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components"
 import modernNormalize from "styled-modern-normalize"
 
 const GlobalStyle = createGlobalStyle`
@@ -45,6 +45,7 @@ const GlobalStyle = createGlobalStyle`
     a {
         display: inline-block;
         text-decoration: none;
+        // text-decoration: underline;
         text-decoration-skip-ink: auto;
         color: inherit;
         cursor: pointer;
@@ -81,13 +82,19 @@ const GlobalStyle = createGlobalStyle`
         font-size: 1.75rem;
         line-height: 2.25rem;
         color: ${({ theme }) => theme.colors.primary};
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
     }
 
     h4 {
         font-size: 1rem;
         line-height: 1.5rem;
         font-weight: 400;
+    }
+
+    h5 {
+        font-weight: 550;
+        font-size: 1.25rem;
+        line-height: 1.5rem;
     }
 
     hr {
@@ -97,6 +104,6 @@ const GlobalStyle = createGlobalStyle`
         opacity: 0.1;
       }
 
-`;
+`
 
 export default GlobalStyle
