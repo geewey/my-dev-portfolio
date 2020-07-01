@@ -1,8 +1,9 @@
 module.exports = {
   author: "@geewey",
-  siteTitle: "GY | Dev Portfolio",
+  siteTitle: "Gee-Wey Yue | Developer Portfolio",
   siteShortTitle: "GY | Dev Portfolio", // Used as logo text in header, footer, and splash screen
-  siteDescription: "Gee-Wey Yue | Developer Portfolio",
+  siteDescription:
+    "Gee-Wey of House Yue, First of His Name, Developer of Software, Engineer of Full-Stack, Solver of Coding Problems, Breaker of Bugs, & Disciple of Programming.",
   siteUrl: "https://geewey.com",
   siteLanguage: "en_US",
   siteIcon: "src/content/favicon2.png", // Relative to gatsby-config file
