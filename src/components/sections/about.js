@@ -58,6 +58,9 @@ const StyledContentWrapper = styled(ContentWrapper)`
         box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.32);
       }
     }
+    .gatsby-resp-image-figcaption {
+      text-align: center;
+    }
   }
 `
 
@@ -103,6 +106,7 @@ const About = ({ content }) => {
           <Img
             className="about-author"
             fluid={frontmatter.image.childImageSharp.fluid}
+            title="Photo credit: David Tan"
           />
         </motion.div>
       </StyledContentWrapper>
